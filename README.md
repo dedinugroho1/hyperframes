@@ -1,3 +1,126 @@
+<!--
+  Fork notice (Apache License 2.0, Section 4b):
+  This README was modified by Dedi Nugroho. The fork-specific sections are
+  everything above the "Upstream README" divider and the "Credits & License"
+  section at the end. See FORK_CHANGES.md for the full change log.
+-->
+
+<p align="center">
+  <a href="https://github.com/dedinugroho1/hyperframes"><img src="https://img.shields.io/badge/Hyperframes_Custom_Build-Maintained_by_Dedi_Nugroho-0f172a?style=for-the-badge&logo=github&logoColor=white" alt="Hyperframes Custom Build - Maintained by Dedi Nugroho"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/heygen-com/hyperframes"><img src="https://img.shields.io/badge/fork_of-heygen--com%2Fhyperframes-6e40c9?logo=github" alt="Fork of heygen-com/hyperframes"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License: Apache 2.0"></a>
+  <a href="FORK_CHANGES.md"><img src="https://img.shields.io/badge/modifications-documented-success" alt="Modifications documented in FORK_CHANGES.md"></a>
+  <img src="https://img.shields.io/badge/status-unofficial_community_fork-orange" alt="Status: unofficial community fork">
+</p>
+
+> [!IMPORTANT]
+> **Hyperframes Custom Build — Maintained by Dedi Nugroho**
+>
+> This repository is an **independent, unofficial fork** of [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes).
+> It is **not** an official HeyGen release and is **not affiliated with, sponsored by, or endorsed by HeyGen, Inc.**
+> "HyperFrames" and "HeyGen" are names and marks of HeyGen, Inc.; they are used here only to describe where this code comes from.
+>
+> Every change made in this fork is listed in [`FORK_CHANGES.md`](FORK_CHANGES.md), and the original copyright and license are kept intact in [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
+
+## About This Fork
+
+HyperFrames turns HTML, CSS, media, and seekable animations into deterministic MP4 video. I forked it to use and extend that rendering core for my own projects, with three focus areas:
+
+| Focus area                          | What it means in this fork                                                                                                                                                                |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Programmatic video rendering**    | Generating videos from data and templates in code rather than by hand, and tuning render settings (resolution, frame rate, concurrency, encoding) for throughput and reproducible output. |
+| **Headless pipeline integration**   | Running the CLI and the `@hyperframes/producer` pipeline unattended — from scripts, CI jobs, containers, or backend services — so a video is just another build artifact.                 |
+| **Dynamic animation customization** | Driving compositions with variables and runtime data (GSAP timelines, sub-compositions, registry blocks) so one template can produce many tailored videos.                                |
+
+These are the goals of the fork. Work that has actually landed is recorded in [`FORK_CHANGES.md`](FORK_CHANGES.md); anything not listed there behaves exactly as upstream.
+
+## Quick Start (this fork, from source)
+
+The official `hyperframes` npm package and the Claude Code plugin are published by HeyGen from the upstream repository. To run **this fork's** code, build it from source.
+
+### 1. Prerequisites
+
+| Tool                           | Version     | Check with        | Notes                                                                      |
+| ------------------------------ | ----------- | ----------------- | -------------------------------------------------------------------------- |
+| [Node.js](https://nodejs.org)  | 22 or newer | `node -v`         | Required by the CLI (`engines.node >= 22`).                                |
+| [Bun](https://bun.sh)          | latest      | `bun -v`          | The workspace package manager. Do not use npm or pnpm to install the repo. |
+| [FFmpeg](https://ffmpeg.org)   | any recent  | `ffmpeg -version` | Encodes captured frames into video.                                        |
+| [Git LFS](https://git-lfs.com) | optional    | `git lfs version` | Only needed for the golden regression-test videos (~240 MB).               |
+
+Headless Chrome for frame capture is managed by the toolchain; `hyperframes doctor` (step 4) reports anything missing.
+
+```bash
+# macOS (Homebrew)
+brew install node ffmpeg git-lfs && curl -fsSL https://bun.sh/install | bash
+
+# Ubuntu / Debian
+sudo apt install ffmpeg git-lfs && curl -fsSL https://bun.sh/install | bash   # install Node 22+ via nvm or NodeSource
+```
+
+### 2. Clone
+
+```bash
+# Source only (fast, skips the large test videos)
+GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/dedinugroho1/hyperframes.git
+cd hyperframes
+```
+
+### 3. Install and build
+
+```bash
+bun install      # install workspace dependencies
+bun run build    # build every package (core, engine, producer, studio, CLI, ...)
+```
+
+### 4. Verify your environment
+
+```bash
+node packages/cli/bin/hyperframes.mjs doctor
+```
+
+### 5. Create, preview, and render a video
+
+```bash
+# Scaffold a project outside the repo, using the CLI you just built
+node packages/cli/bin/hyperframes.mjs init ../my-video
+cd ../my-video
+
+node ../hyperframes/packages/cli/bin/hyperframes.mjs lint      # static checks
+node ../hyperframes/packages/cli/bin/hyperframes.mjs preview   # live preview in the browser
+node ../hyperframes/packages/cli/bin/hyperframes.mjs render    # render to MP4
+```
+
+Tip: add an alias so the fork's CLI is available as `hf`:
+
+```bash
+alias hf="node $(pwd)/packages/cli/bin/hyperframes.mjs"   # run from the repo root
+```
+
+### Working on the fork itself
+
+```bash
+bun run dev       # start the Studio composition editor
+bun run test      # run all tests
+bun run lint      # oxlint
+bun run format    # oxfmt
+```
+
+No environment variables are needed for basic use (see [`.env.example`](.env.example)). Contribution workflow, test commands, and conventions are in [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+### Reporting issues
+
+- A problem **specific to this fork** → [dedinugroho1/hyperframes issues](https://github.com/dedinugroho1/hyperframes/issues)
+- A problem that also happens **upstream** → [heygen-com/hyperframes issues](https://github.com/heygen-com/hyperframes/issues)
+
+---
+
+<p align="center"><sub>⬇️ <b>Upstream README</b> — the content below is from <a href="https://github.com/heygen-com/hyperframes">heygen-com/hyperframes</a> and describes the upstream project, its official packages, and its community channels. ⬇️</sub></p>
+
+---
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/logo/dark.svg">
@@ -359,6 +482,17 @@ If you only need source files, you can skip LFS content:
 GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/heygen-com/hyperframes.git
 ```
 
-## License
+## Credits & License
 
-[Apache 2.0](LICENSE)
+**Hyperframes Custom Build** is a derivative work of **[HyperFrames](https://github.com/heygen-com/hyperframes)**, created and maintained by **[HeyGen, Inc.](https://www.heygen.com)** and its contributors. All credit for the original framework belongs to them.
+
+- **Upstream project:** [github.com/heygen-com/hyperframes](https://github.com/heygen-com/hyperframes)
+- **Original copyright:** Copyright 2026 HeyGen, Inc.
+- **License:** [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0); the full, unmodified text is in [`LICENSE`](LICENSE)
+- **Attribution notices:** [`NOTICE`](NOTICE)
+- **Fork modifications:** listed file by file in [`FORK_CHANGES.md`](FORK_CHANGES.md); modifications are Copyright 2026 Dedi Nugroho and released under the same Apache 2.0 license
+- **Third-party acknowledgements:** [`CREDITS.md`](CREDITS.md)
+
+This fork is not an official HeyGen product. "HyperFrames" and "HeyGen" are names and marks of HeyGen, Inc. and are used here only to identify the origin of the code, as permitted by Section 6 of the Apache License 2.0. The software is provided "AS IS", without warranties or conditions of any kind; see Sections 7 and 8 of the license.
+
+Fork maintained by **Dedi Nugroho** · [github.com/dedinugroho1](https://github.com/dedinugroho1)

@@ -1,0 +1,23 @@
+Hyperframes Custom Build
+Maintained by Dedi Nugroho (https://github.com/dedinugroho1/hyperframes)
+
+This product is a modified version (Derivative Work) of HyperFrames:
+
+  HyperFrames
+  Copyright 2026 HeyGen, Inc.
+  https://github.com/heygen-com/hyperframes
+  Licensed under the Apache License, Version 2.0
+
+Modifications Copyright 2026 Dedi Nugroho, also licensed under the
+Apache License, Version 2.0. Files changed from the upstream version are
+listed in FORK_CHANGES.md.
+
+This fork is not an official release of HeyGen, Inc., and is not
+affiliated with, sponsored by, or endorsed by HeyGen, Inc. "HyperFrames"
+and "HeyGen" are names and marks of HeyGen, Inc., used here only to
+describe the origin of the Work.
+
+The upstream repository did not include a NOTICE file at the time of
+forking. This file was added by the fork maintainer to carry attribution
+and does not modify the License. Third-party components and their licenses
+are acknowledged in CREDITS.md.
