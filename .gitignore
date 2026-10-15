@@ -24,6 +24,10 @@ Thumbs.db
 docs/images/
 
 videos/
+# Render video channel (dedinugroho1, RuangSains) tidak boleh pernah ter-push ke GitHub,
+# walaupun suatu saat ada file di videos/ yang di-unignore.
+videos/**/*.mp4
+videos/**/*.mov
 
 # IDE
 .vscode/
